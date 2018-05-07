@@ -1,0 +1,159 @@
+﻿
+
+@model IEnumerable<eRoutingSlip.Models.LinkedListSignatureNode>
+
+@{
+    ViewBag.Title = "SetPrevNext";
+}
+
+
+
+<table class="table" style="table-layout:fixed;">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoutingSlipID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ID)
+        </th>
+        <th>
+            Previous
+        </th>
+        <th>
+            Next
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutingSlipID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrevSNode.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NextSNode.ID)
+            </td>
+            <td>
+                @if (item.PrevSNode == null)
+                {
+                    @Html.ActionLink("Add Name ", "#", "", null, new { onclick = "return ShowInput('label" + item.ID + "');" })
+                }
+                else
+                {
+                    //@Html.ActionLink("Add Name | ", "CreateNode", "LinkedListSignatureNode", new { id = item.ID }, null)
+                    @Html.ActionLink("Add Name |", "#", "", null, new { onclick = "return ShowInput('label" + item.ID + "');" })
+                    @Html.ActionLink("  Remove ", "DeleteNode", "LinkedListSignatureNode", new { id = item.ID }, null)
+                }
+            </td>
+        </tr>
+        <tr id="@("label"+item.ID)" class="inputholder" style="background-color:silver; color:black;">
+            <td></td>
+            <td>
+                <i>New entry</i>
+            </td>
+            <td>
+                @Html.ValidationMessage("*")
+                <input type="text" id="@("input"+item.ID)" value="" />
+            </td>
+            <td></td>
+            <td>
+                @*@Html.ActionLink(" Save | ", "CreateNode", "LinkedListSignatureNode", new { onclick = "return Validate('input" + item.ID + "');" })*@
+                @*@Html.ActionLink(" Save | ", "CreateNode", new { id = item.ID }, new { onclick = "return Validate(item.ID)" })*@
+                @*@Html.ActionLink(" Save | ", "CreateNode", "LinkedListSignatureNode", new { onclick = "return Validate('input" + item.ID + "');" })*@
+                @Html.ActionLink(" Save | ", "#", "#", new { onclick = "return Validate(" + item.ID + ");" })
+                @Html.ActionLink(" Cancel", "#", "", null, new { onclick = "return HideInput('label" + item.ID + "');" })
+            </td>
+        </tr>
+    }
+
+
+
+</table>
+
+<script>
+
+    function ShowInput(id) {
+        document.getElementById(id).style.display = "table-row";
+        return false;
+    }
+    function HideInput(id) {
+        document.getElementById(id).style.display = "none";
+        return false;
+    }
+
+    //function Validate(id) {
+    //    var a = document.getElementById(id);
+    //    if (a.value.length >= 1) {
+    //        var name = a.value;
+    //        return a;
+    //    }
+    //    else {
+    //        return false;
+
+    //    }
+    //}
+    function getName(id) {
+        var n = document.getElementById(id).value;
+        return n;
+    }
+
+    function Validate(id) {
+        var newId = "input" + id;
+        alert(newId);
+
+        name = getName(newId);
+        alert(name);
+
+        //var params = "{'id': '" + $("#id").val() + "'}";
+
+
+         //gives error alert
+        //$.ajax({
+        //    url: '<%: Url.Action("NewNode", "LinkedListSignatureNode")',
+        //    data: {
+        //        'id': id,
+        //        'n': name
+        //    },
+        //    type: 'GET',
+        //    cache: false,
+        //    contentType: 'application/json; charset=utf-8',
+        //    dataType: 'html',
+        //    success: function (result) {
+        //        alert('success');
+        //    },
+        //    error: function (response) {
+        //        alert('error');
+        //    }
+
+        //});
+
+        //window.location.href = '"/LinkedListSignatureNode/NewNode/id=" + id + "/n=" + name',true;
+        window.location.replace("/LinkedListSignatureNode/NewNode/id=" + id + "?n=" + name+"/") //redirects
+        //window.location.replace("/LinkedListSignatureNode/NewNode/" + id + "/" + name+"/")
+
+        //document.location.href = '"/LinkedListSignatureNode/NewNode/id=" + id + "/n=" + name', true;
+        return false;
+
+        // not working
+        //$.ajax({
+        //    url: 'NewNode',
+        //    data: { id: id, n: name }
+        //}).done(function () {
+        //    alert('Added');
+        //});
+    }
+
+
+</script>
+
+<style>
+    .inputholder {
+        display: none;
+    }
+</style>

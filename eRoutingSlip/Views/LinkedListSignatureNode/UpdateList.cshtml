@@ -1,0 +1,47 @@
+﻿@model IEnumerable<eRoutingSlip.Models.LinkedListSignatureNode>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoutingSlipID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrevSNode.ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NextSNode.ID)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutingSlipID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrevSNode.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NextSNode.ID)
+            </td>
+            <td>
+                @Html.ActionLink("Add Name", "AddName", "LinkedListSignatureNode", new { id = item.ID }, null) |
+                @Html.ActionLink("Remove", "Delete", "LinkedListSignatureNode", new { id = item.ID }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+

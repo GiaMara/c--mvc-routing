@@ -1,0 +1,37 @@
+﻿@model eRoutingSlip.Models.RoutingSlip
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="container mt-3">
+    <h2>Details</h2>
+
+    <div>
+        <h4>RoutingSlip</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>Document</dt>
+
+            <dd>@Html.DisplayFor(model => model.DocumentName)</dd>
+
+            <dt>Requesting Employee</dt>
+
+            <dd>@Html.DisplayFor(model => model.RequestingEmployee)</dd>
+
+            <dt>Date Requested</dt>
+
+            <dd>@Html.DisplayFor(model => model.DateSubmitted)</dd>
+
+            <dt>Route List</dt>
+
+            <dd>@Html.DisplayFor(model => model.ForwardTo)</dd>
+
+
+        </dl>
+    </div>
+    <p>
+
+        @Html.ActionLink("Edit", "Edit", new { id = Model.RoutingSlipID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>

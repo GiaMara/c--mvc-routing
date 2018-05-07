@@ -1,0 +1,85 @@
+﻿@model IEnumerable<eRoutingSlip.Models.DivisionListViewModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container mt-3">
+    <h3>Summary</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Division</th>
+                <th scope="col">Division Head</th>
+                <th scope="col">Active Routing Slips</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><h5>@item.DivisionName</h5></td>
+                    <td>@item.DivisionHead</td>
+                    <td>@item.RSCount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <ul id="myList">
+        <li>A</li>
+    </ul>
+    <div id="divc">
+        <input type="text" class="inputfield" value="a" id="input1" />
+    </div>
+    @Html.ActionLink("Add Name ", "#", "", null, new { onclick = "return Add();" })
+    @Html.ActionLink(" Div", "#", "", null, new { onclick = "return DivC();" })
+
+</div>
+
+<script>
+
+        function Add() {
+            var node = document.createElement("LI");
+            var textnode = document.createTextNode("Water");
+            node.appendChild(textnode);
+            document.getElementById("myList").appendChild(node);
+            return false;
+        }
+
+        function DivC() {
+
+            var node = document.createElement("INPUT");
+            node.setAttribute("type", "text");
+            node.setAttribute("class", "inputfield");
+            var c = document.getElementById("divc").lastChild.id;
+            alert(c);
+            document.getElementById("divc").appendChild(node);
+
+            return false;
+        }
+
+</script>
+
+@*//var lastField = document.getElementById('buildyourform');
+    //var alert = lastField.firstChild.innerHTML;
+    //alert(alert);
+    //alert('hello');
+    //alert(lastField);
+    //var node = document.createElement("LI");
+    //lastField.appendChild("<p>Hello</p>");
+
+        //var lastField = $("#buildyourform div:last");
+        //var intId = (lastField && lastField.length && lastField.data("idx") + 1) || 1;
+        //var fieldWrapper = $("<div class=\"fieldwrapper\" id=\"field" + intId + "\"/>");
+        //fieldWrapper.data("idx", intId);
+        //var fName = $("<input type=\"text\" class=\"fieldname\" />");
+
+        //var removeButton = $("<input type=\"button\" class=\"remove\" value=\"-\" />");
+        //removeButton.click(function () {
+        //    $(this).parent().remove();
+        //});
+        //fieldWrapper.append(fName);
+        //fieldWrapper.append(removeButton);
+        //$("#buildyourform").append(fieldWrapper);*@
+
