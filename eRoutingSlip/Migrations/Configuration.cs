@@ -1,34 +1,31 @@
 namespace eRoutingSlip.Migrations
 {
-    using eRoutingSlip.Models;
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<eRoutingSlip.Models.ERoutingSlipDB>
+    internal sealed class Configuration : DbMigrationsConfiguration<eRoutingSlip.Models.ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            ContextKey = "eRoutingSlip.Models.ERoutingSlipDB";
+            AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(eRoutingSlip.Models.ERoutingSlipDB context)
+        protected override void Seed(eRoutingSlip.Models.ApplicationDbContext context)
         {
-            context.Divisions.AddOrUpdate(d => d.DivisionName,
-                new Division { DivisionName = "C", DivisionHead = "C. Evans" },
-                new Division { DivisionName = "D", DivisionHead = "F. Muniz" },
-                new Division
-                {
-                    DivisionName = "E",
-                    DivisionHead = "D. Radcliffe",
-                    RoutingSlips =
-                    new List<RoutingSlip> {
-                        new RoutingSlip { DocumentName="ASDF", RequestingEmployee="N. Gaiman", ForwardTo="M. Shyamalan" }
-                        }
-                });
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
         }
     }
 }
