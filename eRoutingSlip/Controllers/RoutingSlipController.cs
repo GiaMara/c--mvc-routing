@@ -1,11 +1,15 @@
 ﻿using eRoutingSlip.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace eRoutingSlip.Controllers
 {
@@ -13,6 +17,7 @@ namespace eRoutingSlip.Controllers
     {
 
         ERoutingSlipDB _db = new ERoutingSlipDB();
+        ApplicationUser userdb = new ApplicationUser();
         // GET: RoutingSlip
         public ActionResult Index()
         {
@@ -21,6 +26,23 @@ namespace eRoutingSlip.Controllers
             return View(model);
         }
 
+        //public async Task<ActionResult> UserList()
+        //{
+        //    List<ApplicationUser> appUsers = new List<ApplicationUser>();
+        //    await Task.Run(() =>
+        //  {
+        //      appUsers = appUsers.ToList();
+        //  });
+        //    return View(appUsers);
+        //}
+
+        public ActionResult GetListOfUsers()
+        { 
+            
+            var model = _db.AspNetUsersList.ToList();
+            return View(model);
+
+        }
         public ActionResult Summary()
         {
             var model = from r in _db.RoutingSlips

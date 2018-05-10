@@ -98,4 +98,4 @@ C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.dll
 C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.pdb
 C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.Migrations.init.resources
 C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.csproj.GenerateResource.cache
-C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.Migrations.init2.resources
+C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.Migrations.Gia.resources

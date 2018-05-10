@@ -1,0 +1,39 @@
+﻿@model IEnumerable<eRoutingSlip.Models.AspNetUser>
+
+@{
+    ViewBag.Title = "GetListOfUsers";
+}
+<div class="container mt-3">
+    <h2>GetListOfUsers</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                UserName
+            </th>
+            <th>
+                Email
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @item.UserName
+                </td>
+
+
+            </tr>
+        }
+
+    </table>
+</div>
