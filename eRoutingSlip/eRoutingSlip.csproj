@@ -53,6 +53,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -189,12 +191,30 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="AspNetUser.cs">
+      <DependentUpon>EmailModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DivisionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LinkedListSignatureNodeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoutingSlipController.cs" />
+    <Compile Include="EmailModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmailModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmailModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmailModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmailModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmailModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -211,6 +231,7 @@
     <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\Division.cs" />
     <Compile Include="Models\DivisionListViewModel.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\eRoutingSlipDB.cs" />
     <Compile Include="Models\LinkedListSignature.cs" />
     <Compile Include="Models\LinkedListSignatureNode.cs" />
@@ -236,14 +257,34 @@
     <Content Include="Content\imgs\7.png" />
     <Content Include="Content\imgs\8.png" />
     <Content Include="Content\imgs\9.png" />
+    <Content Include="Content\typeahead.css" />
+    <Content Include="EmailModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EmailModel.edmx</DependentUpon>
+      <LastGenOutput>EmailModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="EmailModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EmailModel.edmx</DependentUpon>
+      <LastGenOutput>EmailModel.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="EmailModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EmailModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="EmailModel.edmx.diagram">
+      <DependentUpon>EmailModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -258,6 +299,10 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -306,7 +351,7 @@
     <Content Include="Views\LinkedListSignatureNode\Details.cshtml" />
     <Content Include="Views\LinkedListSignatureNode\AddName.cshtml" />
     <Content Include="Views\LinkedListSignatureNode\CreateSignature.cshtml" />
-    <Content Include="Views\RoutingSlip\GetListOfUsers.cshtml" />
+    <Content Include="Views\RoutingSlip\EmailSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -332,6 +377,9 @@
     <EmbeddedResource Include="Migrations\201805100303175_Gia.resx">
       <DependentUpon>201805100303175_Gia.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

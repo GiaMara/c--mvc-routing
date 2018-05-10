@@ -26,23 +26,22 @@ namespace eRoutingSlip.Controllers
             return View(model);
         }
 
-        //public async Task<ActionResult> UserList()
-        //{
-        //    List<ApplicationUser> appUsers = new List<ApplicationUser>();
-        //    await Task.Run(() =>
-        //  {
-        //      appUsers = appUsers.ToList();
-        //  });
-        //    return View(appUsers);
-        //}
-
-        public ActionResult GetListOfUsers()
-        { 
-            
-            var model = _db.AspNetUsersList.ToList();
-            return View(model);
-
+        public ActionResult EmailSearch()
+        {
+            return View();
         }
+
+        public JsonResult GetSearchValue(string search)
+        {
+            ERoutingSlipDBEntities db = new ERoutingSlipDBEntities();
+            List<EmailModel> allsearch = db.AspNetUsers.Where(x => x.Email.Contains(search)).Select(x => new EmailModel
+            {
+                Id = x.Id,
+                Email = x.Email
+            }).ToList();
+            return new JsonResult { Data = allsearch, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+       
         public ActionResult Summary()
         {
             var model = from r in _db.RoutingSlips
@@ -54,7 +53,7 @@ namespace eRoutingSlip.Controllers
                         };
             return View(model);
         }
- 
+
 
         // GET: RoutingSlip/Details/5
         public ActionResult Details(int id)
@@ -74,7 +73,7 @@ namespace eRoutingSlip.Controllers
         public ActionResult Create(RoutingSlip routingslip)
         {
 
-            
+
             if (ModelState.IsValid)
             {
                 _db.RoutingSlips.Add(routingslip);
@@ -123,13 +122,13 @@ namespace eRoutingSlip.Controllers
                 {
 
                     namesArray[i] = namesArray[i].Trim();
-                    
+
                     Signature s = new Signature
                     {
                         SignatureName = namesArray[i],
                         Status = "N/A",
                         RoutingSlipID = id,
-                //        //SignatureID = count++,
+                        //        //SignatureID = count++,
                     };
                     LinkedListSignatureNode sNode = new LinkedListSignatureNode
                     {
@@ -197,7 +196,7 @@ namespace eRoutingSlip.Controllers
                              select n;
             foreach (LinkedListSignatureNode l in queryModel)
             {
-                
+
                 if (count == 0)
                 {
                     l.PrevSNode = null;
@@ -223,7 +222,7 @@ namespace eRoutingSlip.Controllers
                 return RedirectToAction("Details", "LinkedListSignatureNode", new { id = modelA.RoutingSlipID });
             }
             return View(modelA);
- 
+
         }
 
         public ActionResult DeleteLinkedList(int id)
@@ -232,7 +231,7 @@ namespace eRoutingSlip.Controllers
 
             _db.LinkedListSignatures.Remove(model);
             _db.SaveChanges();
-            
+
             return RedirectToAction("Index");
         }
 
@@ -241,7 +240,7 @@ namespace eRoutingSlip.Controllers
         // GET: RoutingSlip/Edit/5
         public ActionResult Edit(int id)
         {
-            var model = _db.RoutingSlips.Find(id);            
+            var model = _db.RoutingSlips.Find(id);
             return View(model);
         }
 

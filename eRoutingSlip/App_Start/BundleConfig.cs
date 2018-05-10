@@ -26,7 +26,11 @@ namespace eRoutingSlip
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-lux.css",
+                      "~/Content/typeahead.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle( "~/bundles/lib").Include(
+                "~/scripts/typeahead.bundle.js"));
         }
     }
 }
