@@ -1,35 +1,12 @@
 ﻿@model eRoutingSlip.Models.RoutingSlip
-
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 @{
     ViewBag.Title = "Create";
 }
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#ForwardToEmail").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: "/RoutingSlip/GetEmail",
-                    type: "POST",
-                    dataType: "json",
-                    data: { Prefix: request.term },
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.Email, value: item.Email };
-                        }))
 
-                    }
-                })
-            },
-            messages: {
-                noResults: "", results: ""
-            }
-        });
-    })
-</script>
 <div class="container mt-3">
     <h3>File a Routing Slip</h3>
 
@@ -39,44 +16,55 @@
 
         <div class="form-horizontal">
             <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.DivisionID, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.DivisionID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.DivisionID, "", new { @class = "text-danger" })
-                </div>
-            </div>
+            <div class="row">
+                <div class="col">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DivisionID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DivisionID, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DivisionID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.DocumentName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.DocumentName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.DocumentName, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DocumentName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DocumentName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DocumentName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.RequestingEmployee, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.RequestingEmployee, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.RequestingEmployee, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RequestingEmployee, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.RequestingEmployee, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.RequestingEmployee, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="col">
+                    <label>Send to: </label>
+                    <div class="row">
+                        <div class="col-7"><input type="text" class="form-control inputfield py-2" id="input0" /></div>
+                        <div class="col-3"><input type="button" value="Add" class="btn btn-default py-2" onclick="SendList();" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-9" id="SendList">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <fieldset id="forwardform"></fieldset>
+                    </div>
+                </div>
 
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.ForwardTo, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ForwardTo, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ForwardTo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
             </div>
         </div>
     }
@@ -84,6 +72,102 @@
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
-    <input class="form-control" id="ForwardToEmail" />
 
 </div>
+
+<script>
+    $("#input0").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetSearchValue","RoutingSlip")',
+                dataType: "json",
+                data: { search: $("#input0").val() },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return{ label: item.Email, value: item.Email };
+                    }));
+                },
+                error: function (xhr, status, error) {
+                    alert("Error")
+                }
+            });
+        }
+    });
+    function AddMail() {
+        var c = document.getElementById("SendList").childElementCount;
+        var listnode = document.createElement("LI");
+        c += 1;
+        var setId = "email" + c;
+        var display = '' + c;
+        var textnode;
+        // add to list
+        listnode.setAttribute("class", "list-group-item py-1 mb-1 mt-2");
+        listnode.setAttribute("id", setId);
+        textnode = document.createTextNode(display + " " + $("#input0").val());
+        listnode.appendChild(textnode); //textnode
+
+        var removeEntry = document.createElement("BUTTON");
+        
+        removeEntry.setAttribute("class", "btn btn-default py-0 my-1 ml-5 float-right badge-danger badge-pill badge");
+        var t = document.createTextNode("Remove");
+        removeEntry.appendChild(t);
+
+
+        listnode.appendChild(removeEntry);
+        document.getElementById("SendList").appendChild(listnode);
+        document.getElementById("input0").value = '';
+    }
+
+    function AddField() {
+        var lastField = $("#forwardform div:last");
+        var intId = document.getElementById("forwardform").childElementCount;
+        var fieldWrapper = $("<div class=\"fieldwrapper\" id=\"field" + intId + "\"/>");
+        //var fName = $("<input type=\"text\" class=\"fieldname\/>");
+        var fName = document.getElementById("#input0").val();
+
+        var removeButton = $("<input type=\"button\" class=\"remove\" value=\"-\" />");
+        removeButton.click(function () {
+            $(this).parent().remove();
+        });
+        fieldWrapper.append(fName);
+        fieldWrapper.append(removeButton);
+        $("#forwardform").append(fieldWrapper);
+    }
+
+
+    function SendList() {
+        var c = document.getElementById("SendList").childElementCount;
+        var newDiv = document.createElement("p");
+        newDiv.setAttribute("class", "mt-2");
+
+        c += 1;
+        var setId = "email" + c;
+        var display = '' + c;
+        var emailInput;
+        // add to list
+
+        emailInput = document.createTextNode(display + " " + $("#input0").val());
+        //listnode.setAttribute("class", "list-group-item py-1 mb-1 mt-2");
+        //listnode.setAttribute("id", setId);
+        newDiv.appendChild(emailInput); //textnode
+
+        var removeEntry = document.createElement("BUTTON");
+
+        removeEntry.setAttribute("class", "btn btn-default  ml-5 badge-danger badge-pill badge");
+        removeEntry.setAttribute("type", "button");
+        removeEntry.setAttribute("onclick", "Rem();")
+               var t = document.createTextNode("Remove");
+        removeEntry.appendChild(t);
+
+
+
+        newDiv.appendChild(removeEntry);
+        document.getElementById("SendList").appendChild(newDiv);
+        document.getElementById("input0").value = '';
+    }
+
+    function Rem() {
+        alert('removing');
+        //insert code remove
+    }
+</script>
