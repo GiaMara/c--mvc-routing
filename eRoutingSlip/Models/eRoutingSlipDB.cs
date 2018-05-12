@@ -22,10 +22,10 @@ namespace eRoutingSlip.Models
         public DbSet<AspNetUser> AspNetUsersList { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<LinkedListSignatureNode>()
-                .HasOptional(f => f.NextSNode)
-                .WithOptionalPrincipal(f => f.PrevSNode)
-                .Map(c => c.MapKey("PreviousNodeId"));
+            //modelBuilder.Entity<LinkedListSignatureNode>()
+            //    .HasOptional(f => f.NextSNode)
+            //    .WithOptionalPrincipal(f => f.PrevSNode)
+            //    .Map(c => c.MapKey("PreviousNodeId"));
             //modelBuilder.Entity<AspNetUsers>()
             //    .HasMany(c => c.Roles)
             //    .WithMany(i => i.Users)

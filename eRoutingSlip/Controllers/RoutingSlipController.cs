@@ -13,6 +13,7 @@ using System.Web.Security;
 
 namespace eRoutingSlip.Controllers
 {
+    [Authorize]
     public class RoutingSlipController : Controller
     {
 
@@ -115,6 +116,8 @@ namespace eRoutingSlip.Controllers
             //var count = 2;
             if (model.ForwardTo.Contains(","))
             {
+
+                model.ForwardTo = model.ForwardTo.Substring(0, model.ForwardTo.Length - 1);
                 string[] namesArray = model.ForwardTo.Split(',');
                 List<string> namesList = new List<string>(namesArray.Length);
 
