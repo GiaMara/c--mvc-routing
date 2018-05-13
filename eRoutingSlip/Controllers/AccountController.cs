@@ -161,6 +161,12 @@ namespace eRoutingSlip.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                    ERoutingSlipDB _db = new ERoutingSlipDB();
+
+                    Employee e = new Employee();
+                    e.Email = model.Email;
+                    _db.Employees.Add(e);
+                    _db.SaveChanges();
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
