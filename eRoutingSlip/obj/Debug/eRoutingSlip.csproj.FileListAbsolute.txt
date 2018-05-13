@@ -100,3 +100,6 @@ C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.Migrations.
 C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.csproj.GenerateResource.cache
 C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.Migrations.Gia.resources
 C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.Migrations.RequiredDocNameForwardTo.resources
+C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.Migrations.AddedEmployeesERSDBandIdentityModels.resources
+C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.Migrations.ModifyEmpModel.resources
+C:\Users\GM\Desktop\eRoutingSlip\eRoutingSlip\obj\Debug\eRoutingSlip.Migrations.DropAspNetUserColinEmp.resources

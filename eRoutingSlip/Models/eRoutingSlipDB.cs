@@ -20,6 +20,7 @@ namespace eRoutingSlip.Models
         public DbSet<LinkedListSignatureNode> LinkedListSignatureNodes { get; set; }
         //public DbSet<AspNetRoles> AspNetRolesList { get; set; }
         public DbSet<AspNetUser> AspNetUsersList { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<LinkedListSignatureNode>()

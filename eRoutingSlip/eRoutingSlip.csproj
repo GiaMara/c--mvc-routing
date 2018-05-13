@@ -230,6 +230,18 @@
     <Compile Include="Migrations\201805130621140_RequiredDocNameForwardTo.Designer.cs">
       <DependentUpon>201805130621140_RequiredDocNameForwardTo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805130730383_AddedEmployeesERSDBandIdentityModels.cs" />
+    <Compile Include="Migrations\201805130730383_AddedEmployeesERSDBandIdentityModels.Designer.cs">
+      <DependentUpon>201805130730383_AddedEmployeesERSDBandIdentityModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805130807176_ModifyEmpModel.cs" />
+    <Compile Include="Migrations\201805130807176_ModifyEmpModel.Designer.cs">
+      <DependentUpon>201805130807176_ModifyEmpModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805130827412_DropAspNetUserColinEmp.cs" />
+    <Compile Include="Migrations\201805130827412_DropAspNetUserColinEmp.Designer.cs">
+      <DependentUpon>201805130827412_DropAspNetUserColinEmp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetUser.cs" />
@@ -384,6 +396,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805130621140_RequiredDocNameForwardTo.resx">
       <DependentUpon>201805130621140_RequiredDocNameForwardTo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805130730383_AddedEmployeesERSDBandIdentityModels.resx">
+      <DependentUpon>201805130730383_AddedEmployeesERSDBandIdentityModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805130807176_ModifyEmpModel.resx">
+      <DependentUpon>201805130807176_ModifyEmpModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805130827412_DropAspNetUserColinEmp.resx">
+      <DependentUpon>201805130827412_DropAspNetUserColinEmp.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
