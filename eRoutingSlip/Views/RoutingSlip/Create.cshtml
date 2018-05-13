@@ -83,7 +83,8 @@
 </div>
 
 <script>
-    alert('h');
+ var usrName = "@HttpContext.Current.User.Identity.Name";
+   alert(usrName);
 
     $("#input0").autocomplete({
         source: function (request, response) {
@@ -113,6 +114,9 @@
         else {
             if (f.includes(e)) {
                 alert('This e-mail is currently in the list');
+            }
+            else if (e == usrName) {
+                alert('Unable to add current user to list.');
             }
             else {
                 em = e + ",";
