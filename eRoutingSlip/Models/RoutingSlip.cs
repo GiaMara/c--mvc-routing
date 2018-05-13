@@ -10,7 +10,7 @@ namespace eRoutingSlip.Models
     {
         public int RoutingSlipID { get; set; }
         public string DocumentName { get; set; }
-        public string RequestingEmployee { get; set; }
+        public string RequestingEmployee { get; set; } = System.Web.HttpContext.Current.User.Identity.Name;
         public DateTime DateSubmitted { get; set; } = DateTime.Now;
         public string ForwardTo { get; set; }
         public int DivisionID { get; set; }
