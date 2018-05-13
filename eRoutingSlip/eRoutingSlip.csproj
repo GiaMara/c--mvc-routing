@@ -196,6 +196,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DivisionController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LinkedListSignatureNodeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -241,6 +242,10 @@
     <Compile Include="Migrations\201805130827412_DropAspNetUserColinEmp.cs" />
     <Compile Include="Migrations\201805130827412_DropAspNetUserColinEmp.Designer.cs">
       <DependentUpon>201805130827412_DropAspNetUserColinEmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805130915108_SetProfile.cs" />
+    <Compile Include="Migrations\201805130915108_SetProfile.Designer.cs">
+      <DependentUpon>201805130915108_SetProfile.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -369,6 +374,7 @@
     <Content Include="Views\LinkedListSignatureNode\AddName.cshtml" />
     <Content Include="Views\LinkedListSignatureNode\CreateSignature.cshtml" />
     <Content Include="Views\RoutingSlip\EmailSearch.cshtml" />
+    <Content Include="Views\Employee\SetProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -405,6 +411,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805130827412_DropAspNetUserColinEmp.resx">
       <DependentUpon>201805130827412_DropAspNetUserColinEmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805130915108_SetProfile.resx">
+      <DependentUpon>201805130915108_SetProfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
