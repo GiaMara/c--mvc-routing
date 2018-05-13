@@ -236,6 +236,7 @@
     <Compile Include="Models\Division.cs" />
     <Compile Include="Models\DivisionListViewModel.cs" />
     <Compile Include="Models\EmailModel.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\eRoutingSlipDB.cs" />
     <Compile Include="Models\LinkedListSignature.cs" />
     <Compile Include="Models\LinkedListSignatureNode.cs" />
