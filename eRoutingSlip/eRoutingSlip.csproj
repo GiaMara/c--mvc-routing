@@ -226,6 +226,10 @@
     <Compile Include="Migrations\201805100303175_Gia.Designer.cs">
       <DependentUpon>201805100303175_Gia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805130621140_RequiredDocNameForwardTo.cs" />
+    <Compile Include="Migrations\201805130621140_RequiredDocNameForwardTo.Designer.cs">
+      <DependentUpon>201805130621140_RequiredDocNameForwardTo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetUser.cs" />
@@ -376,6 +380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805100303175_Gia.resx">
       <DependentUpon>201805100303175_Gia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805130621140_RequiredDocNameForwardTo.resx">
+      <DependentUpon>201805130621140_RequiredDocNameForwardTo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
