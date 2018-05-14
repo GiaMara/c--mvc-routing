@@ -86,7 +86,7 @@ namespace eRoutingSlip.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -163,8 +163,10 @@ namespace eRoutingSlip.Controllers
 
                     ERoutingSlipDB _db = new ERoutingSlipDB();
 
-                    Employee e = new Employee();
-                    e.Email = model.Email;
+                    Employee e = new Employee
+                    {
+                        Email = model.Email
+                    };
                     _db.Employees.Add(e);
                     _db.SaveChanges();
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -327,7 +329,7 @@ namespace eRoutingSlip.Controllers
             {
                 return View("Error");
             }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
         }
 
         //

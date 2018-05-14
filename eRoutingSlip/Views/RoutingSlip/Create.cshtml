@@ -20,46 +20,48 @@
             <div class="row">
 
                 <div class="col">
-                    <div class="row">
+                    <div class="row ml-1">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.DivisionID, htmlAttributes: new { @class = "control-label" })
-                            @Html.ValidationMessageFor(model => model.DivisionID, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="row">
-                        @Html.EditorFor(model => model.DivisionID, new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.DocumentName, htmlAttributes: new { @class = "control-label mt-3" })
+                            @*@Html.LabelFor(model => model.DocumentName, htmlAttributes: new { @class = "control-label" })*@
+                            Document Link
                             @Html.ValidationMessageFor(model => model.DocumentName, "", new { @class = "text-danger" })
                         </div>
-                     </div>
-                     <div class="row">
-                            @Html.EditorFor(model => model.DocumentName, new { htmlAttributes = new { @class = "form-control" } })
-                      </div>                   
-                     <div class="row">
-                         <div class="form-group">
-                             <input type="submit" value="Create" class="btn btn-default mt-2" />
-                             @*</div>*@
-                         </div>
-                     </div>
-                </div>
-                <div class="col">
-                    <div class="row">
+                    </div>
+                    <div class="row ml-1">
+                            @Html.EditorFor(model => model.DocumentName, new { htmlAttributes = new { @class = "form-control", @id = "docTitle", autofocus = "" } })
+
+                        <div class="col-2"><input type="button" id="setTitle" value=&#10003 class="btn btn-default" onclick="SetTitle();" /></div>
+                    </div>
+
+                    <!--Start copy-->
+                    <div class="row mt-3">
                         <div class="form-group">
                             @Html.LabelFor(model => model.ForwardTo, "Recipients:", htmlAttributes: new { @class = "control-label ml-3" })
                             @Html.ValidationMessageFor(model => model.ForwardTo, "", new { @class = "text-danger visible" })
                             @Html.EditorFor(model => model.ForwardTo, new { htmlAttributes = new { @class = "form-control d-none", @id = "forwardTo" } })
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-7"><input type="text" class="form-control inputfield " id="input0" /></div>
-                        <div class="col-3"><input type="button" value="Add" class="btn btn-default" onclick="SendList();" /></div>
+
+
+                    <div class="row pb-5">
+                        <div class="col-7"><input type="text" class="form-control inputfield" id="input0" disabled /></div>
+                        <div><input id="addEmail" type="button" value="Add" class="btn btn-default" onclick="SendList();" disabled /></div>
                     </div>
-                    <div class="row">
-                        <div class="col-9" id="SendList">
+
+                    <!--end copy-->
+
+                    <div class="row mt-lg-5 ml-1">
+                        <div class="form-group">
+                            <input type="submit" id="createRS" value="Create" class="btn btn-default" disabled />
+                            <input type="button" id="clearFields" value="Reset Form" class="btn btn-default]ml-2" onclick="ClearFields();" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    Route List
+
+                    <div class="row h-75 " >
+                        <div class="col-9  h-100 ml-3 mt-3 form-control" id="SendList" style="overflow-y: scroll;">
                         </div>
                     </div>
 
@@ -74,7 +76,53 @@
 </div>
 
 <script>
- var usrName = "@HttpContext.Current.User.Identity.Name";
+
+
+    var usrName = "@HttpContext.Current.User.Identity.Name";
+
+    @*var cache = {};
+    $("#input0").autocomplete({
+        minLength: 2,
+        mustMatch: true,
+        focus: function (event, ui) {
+            //ui.item.label contains value
+            return false;
+        },
+        change: function (event, ui) {
+            if (!ui.item) {
+                $("#input0").focus();
+                $("#input0").val("");
+
+
+            }
+
+        },
+        select: function (event, ui) {
+            var val = ui.item.value;
+            return false;
+        },
+        source: function (request, response) {
+            var term = request.term;
+            if (term in cache) {
+                response(cache[term]);
+                return;
+            }
+            $.ajax({
+                url: '@Url.Action("GetSearchValue","RoutingSlip")',
+                dataType: "json",
+                data: { search: $("#input0").val() },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return{ label: item.Email, value: item.Email };
+                    }));
+                },
+                error: function (xhr, status, error) {
+                    alert("Error")
+                }
+            });
+        }
+    });*@
+   
 
     $("#input0").autocomplete({
         source: function (request, response) {
@@ -93,7 +141,24 @@
             });
         }
     });
+
+    function SetTitle() {
+        var x = document.getElementById("docTitle");
+        x.readOnly = true;
+        x = document.getElementById("setTitle");
+        x.disabled = true;
+        x = document.getElementById("clearFields");
+        x.disabled = false;
+        x = document.getElementById("addEmail");
+        x.disabled = false;
+        x = document.getElementById("input0");
+        x.disabled = false;
+        x.focus();
+    }
+
     function SendList() {
+        var x = document.getElementById("createRS");
+        x.disabled = false;
         var e = $("#input0").val();
         var em;
         var f = $("#forwardTo").val();
@@ -135,6 +200,8 @@
                 document.getElementById("input0").value = '';
             }
         }
+        x = document.getElementById("input0");
+        x.focus();
     }
 
     function Rem(a) {
@@ -145,6 +212,14 @@
         var f = $("#forwardTo").val();
         f = f.replace(a, "");
         $("#forwardTo").val(f);
+
+        x = document.getElementById("SendList").childElementCount;
+        if (x == 0) {
+            var y = document.getElementById("createRS");
+            y.disabled = true;
+        }
+        x = document.getElementById("input0");
+        x.focus();
 
     }
 </script>

@@ -17,7 +17,7 @@ namespace eRoutingSlip.Models
         [Required]
         public string ForwardTo { get; set; }
 
-        public int DivisionID { get; set; }
+        public int? DivisionID { get; set; }
         public LinkedListSignature LinkedListSignature { get; set; }
     }
 }

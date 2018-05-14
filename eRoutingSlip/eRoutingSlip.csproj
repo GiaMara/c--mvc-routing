@@ -247,6 +247,10 @@
     <Compile Include="Migrations\201805130915108_SetProfile.Designer.cs">
       <DependentUpon>201805130915108_SetProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805140709069_DivIdNullable.cs" />
+    <Compile Include="Migrations\201805140709069_DivIdNullable.Designer.cs">
+      <DependentUpon>201805140709069_DivIdNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetUser.cs" />
@@ -263,6 +267,11 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoutingSlip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +317,10 @@
     <Content Include="EmailModel.edmx.diagram">
       <DependentUpon>EmailModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -414,6 +427,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805130915108_SetProfile.resx">
       <DependentUpon>201805130915108_SetProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805140709069_DivIdNullable.resx">
+      <DependentUpon>201805140709069_DivIdNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

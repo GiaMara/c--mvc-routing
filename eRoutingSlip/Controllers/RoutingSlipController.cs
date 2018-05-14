@@ -73,8 +73,9 @@ namespace eRoutingSlip.Controllers
         [HttpPost]
         public ActionResult Create(RoutingSlip routingslip)
         {
-
-
+            var email = routingslip.RequestingEmployee;
+            Employee currUser = _db.Employees.SingleOrDefault(user => user.Email == email);
+            routingslip.DivisionID = currUser.DivisionId;
             if (ModelState.IsValid)
             {
                 _db.RoutingSlips.Add(routingslip);
