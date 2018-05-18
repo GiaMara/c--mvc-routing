@@ -388,6 +388,7 @@
     <Content Include="Views\LinkedListSignatureNode\CreateSignature.cshtml" />
     <Content Include="Views\RoutingSlip\EmailSearch.cshtml" />
     <Content Include="Views\Employee\SetProfile.cshtml" />
+    <Content Include="Views\RoutingSlip\GetRequests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

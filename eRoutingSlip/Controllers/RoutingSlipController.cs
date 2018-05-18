@@ -42,7 +42,7 @@ namespace eRoutingSlip.Controllers
             }).ToList();
             return new JsonResult { Data = allsearch, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-       
+
         public ActionResult Summary()
         {
             var model = from r in _db.RoutingSlips
@@ -83,6 +83,15 @@ namespace eRoutingSlip.Controllers
                 return RedirectToAction("CreateLinkedList", new { id = routingslip.RoutingSlipID });
             }
             return View(routingslip);
+        }
+
+        public ActionResult GetRequests()
+        {
+            var currUser = System.Web.HttpContext.Current.User.Identity.Name;
+            //var model = _db.LinkedListSignatures.Select(node => node.CurrentName == currUser);
+            var model = _db.LinkedListSignatures.Where(node => node.CurrentName == currUser).ToList();
+
+            return View(model);
         }
 
         public ActionResult CreateLinkedList(int id)
@@ -223,7 +232,7 @@ namespace eRoutingSlip.Controllers
                 _db.SaveChanges();
                 //return View(queryModel); //commented out 5.5
                 //return RedirectToAction("Index");
-                return RedirectToAction("Details", "LinkedListSignatureNode", new { id = modelA.RoutingSlipID });
+                return RedirectToAction("Details", "RoutingSlip", new { id = modelA.RoutingSlipID });
             }
             return View(modelA);
 

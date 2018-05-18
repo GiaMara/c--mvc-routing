@@ -41,6 +41,8 @@ namespace eRoutingSlip.Models
 
         public System.Data.Entity.DbSet<eRoutingSlip.Models.Employee> Employees { get; set; }
 
+        public System.Data.Entity.DbSet<eRoutingSlip.Models.LinkedListSignature> LinkedListSignatures { get; set; }
+
         //public System.Data.Entity.DbSet<eRoutingSlip.Models.ApplicationUser> ApplicationUsers { get; set; }
 
         //public System.Data.Entity.DbSet<eRoutingSlip.Models.ApplicationUser> ApplicationUsers { get; set; }

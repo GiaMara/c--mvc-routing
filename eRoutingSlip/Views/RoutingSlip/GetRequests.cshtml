@@ -1,0 +1,40 @@
+﻿@model IEnumerable<eRoutingSlip.Models.LinkedListSignature>
+
+@{
+    ViewBag.Title = "GetRequests";
+}
+<div class="container mt-3">
+    <h2>GetRequests</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoutingSlipID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutingSlipID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RoutingSlipID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.RoutingSlipID }) 
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

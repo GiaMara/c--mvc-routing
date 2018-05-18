@@ -28,8 +28,7 @@
                         </div>
                     </div>
                     <div class="row ml-1">
-                            @Html.EditorFor(model => model.DocumentName, new { htmlAttributes = new { @class = "form-control", @id = "docTitle", autofocus = "" } })
-
+                        @Html.EditorFor(model => model.DocumentName, new { htmlAttributes = new { @class = "form-control", @id = "docTitle", autofocus = "" } })
                         <div class="col-2"><input type="button" id="setTitle" value=&#10003 class="btn btn-default" onclick="SetTitle();" /></div>
                     </div>
 
@@ -43,10 +42,11 @@
                     </div>
 
 
-                    <div class="row pb-5">
-                        <div class="col-7"><input type="text" class="form-control inputfield" id="input0" disabled /></div>
+                    <div class="row pb-1">
+                        <div class="col-7"><input type="text" class="form-control inputfield" id="emailInput" disabled /></div>
                         <div><input id="addEmail" type="button" value="Add" class="btn btn-default" onclick="SendList();" disabled /></div>
                     </div>
+                    <div id="ErrorText" class="pt-0 mt-0 pb-5 text-danger font-italic">&nbsp;</div>
 
                     <!--end copy-->
 
@@ -60,7 +60,7 @@
                 <div class="col">
                     Route List
 
-                    <div class="row h-75 " >
+                    <div class="row h-75 ">
                         <div class="col-9  h-100 ml-3 mt-3 form-control" id="SendList" style="overflow-y: scroll;">
                         </div>
                     </div>
@@ -79,9 +79,15 @@
 
 
     var usrName = "@HttpContext.Current.User.Identity.Name";
-
+    var btnClear = document.getElementById("clearFields");
+    var btnAdd = document.getElementById("addEmail");
+    var fieldEmail = document.getElementById("emailInput");
+    var btnCreate = document.getElementById("createRS");
+    var btnTitle = document.getElementById("setTitle");
+    var fieldTitle = document.getElementById("docTitle");
+    var txtError = $('#ErrorText');
     @*var cache = {};
-    $("#input0").autocomplete({
+    $("#emailInput").autocomplete({
         minLength: 2,
         mustMatch: true,
         focus: function (event, ui) {
@@ -90,8 +96,8 @@
         },
         change: function (event, ui) {
             if (!ui.item) {
-                $("#input0").focus();
-                $("#input0").val("");
+                $("#emailInput").focus();
+                $("#emailInput").val("");
 
 
             }
@@ -110,7 +116,7 @@
             $.ajax({
                 url: '@Url.Action("GetSearchValue","RoutingSlip")',
                 dataType: "json",
-                data: { search: $("#input0").val() },
+                data: { search: $("#emailInput").val() },
                 success: function (data) {
                     response($.map(data, function (item) {
                         return{ label: item.Email, value: item.Email };
@@ -122,14 +128,14 @@
             });
         }
     });*@
-   
 
-    $("#input0").autocomplete({
+
+    $("#emailInput").autocomplete({
         source: function (request, response) {
             $.ajax({
                 url: '@Url.Action("GetSearchValue","RoutingSlip")',
                 dataType: "json",
-                data: { search: $("#input0").val() },
+                data: { search: $("#emailInput").val() },
                 success: function (data) {
                     response($.map(data, function (item) {
                         return{ label: item.Email, value: item.Email };
@@ -142,24 +148,36 @@
         }
     });
 
+    $("#emailInput").change(function () {
+        $('#ErrorText').html('&nbsp;');
+    });
+
     function SetTitle() {
-        var x = document.getElementById("docTitle");
-        x.readOnly = true;
-        x = document.getElementById("setTitle");
-        x.disabled = true;
-        x = document.getElementById("clearFields");
-        x.disabled = false;
-        x = document.getElementById("addEmail");
-        x.disabled = false;
-        x = document.getElementById("input0");
-        x.disabled = false;
-        x.focus();
+        fieldTitle.readOnly = true;
+        btnTitle.disabled = true;
+        btnClear.disabled = false;
+
+        btnAdd.disabled = false;
+        fieldEmail.disabled = false;
+        fieldEmail.focus();
+    }
+    var validList = [ "gmail.com" , "lacity.org" ];
+
+    function ValidateEmail(e)
+    {
+    var splitArray = e.split('@@'); // To Get Array
+
+        if (validList.indexOf(splitArray[1]) >= 0) {
+            // Means it has the rejected domains
+            return (true);
+        }
+        else
+            return (false);
     }
 
     function SendList() {
-        var x = document.getElementById("createRS");
-        x.disabled = false;
-        var e = $("#input0").val();
+        btnCreate.disabled = false;
+        var e = $("#emailInput").val();
         var em;
         var f = $("#forwardTo").val();
 
@@ -167,41 +185,47 @@
             alert('Enter e-mail');
         }
         else {
-            if (f.includes(e)) {
-                alert('This e-mail is currently in the list');
-            }
-            else if (e == usrName) {
-                alert('Unable to add current user to list.');
+            var domainTrue = ValidateEmail(e);
+            if (domainTrue) {
+                if (f.includes(e)) {
+                    $('#ErrorText').html('*This e-mail is currently in the list');
+                }
+                else if (e == usrName) {
+                    $('#ErrorText').html('*Unable to add current user to list');
+                }
+                else {
+                    em = e + ",";
+                    f = f + em;
+
+                    $("#forwardTo").val(f);
+                    var newDiv = document.createElement("p");
+                    newDiv.setAttribute("class", "mt-2");
+
+                    var emailInput;
+
+                    emailInput = document.createTextNode($("#emailInput").val());
+
+                    var removeEntry = document.createElement("BUTTON");
+                    //removeEntry.setAttribute("class", "btn btn-default  ml-5 badge-danger badge-pill badge float-right");
+                    removeEntry.setAttribute("class", "btn btn-outline-danger ml-5 float-right px-1 py-0");
+                    removeEntry.setAttribute("type", "button");
+                    removeEntry.setAttribute("id", em);
+                    removeEntry.setAttribute("onclick", "Rem(this.id);");
+                    var t = document.createTextNode("Remove");
+                    removeEntry.appendChild(t);
+
+                    newDiv.appendChild(emailInput); //textnode
+                    newDiv.appendChild(removeEntry);
+                    document.getElementById("SendList").appendChild(newDiv);
+                    document.getElementById("emailInput").value = '';
+                }
             }
             else {
-                em = e + ",";
-                f = f + em;
-
-                $("#forwardTo").val(f);
-                var newDiv = document.createElement("p");
-                newDiv.setAttribute("class", "mt-2");
-
-                var emailInput;
-
-                emailInput = document.createTextNode($("#input0").val());
-
-                var removeEntry = document.createElement("BUTTON");
-
-                removeEntry.setAttribute("class", "btn btn-default  ml-5 badge-danger badge-pill badge float-right");
-                removeEntry.setAttribute("type", "button");
-                removeEntry.setAttribute("id", em);
-                removeEntry.setAttribute("onclick", "Rem(this.id);");
-                var t = document.createTextNode("-");
-                removeEntry.appendChild(t);
-
-                newDiv.appendChild(emailInput); //textnode
-                newDiv.appendChild(removeEntry);
-                document.getElementById("SendList").appendChild(newDiv);
-                document.getElementById("input0").value = '';
+                $('#ErrorText').html('*Invalid domain');
             }
+
         }
-        x = document.getElementById("input0");
-        x.focus();
+        fieldEmail.focus();
     }
 
     function Rem(a) {
@@ -215,11 +239,25 @@
 
         x = document.getElementById("SendList").childElementCount;
         if (x == 0) {
-            var y = document.getElementById("createRS");
-            y.disabled = true;
+            btnCreate.disabled = true;
         }
-        x = document.getElementById("input0");
-        x.focus();
+        fieldEmail.focus();
+
+    }
+
+    function ClearFields() {
+        fieldTitle.readOnly = false;
+        $("#docTitle").val('');
+        fieldTitle.focus();
+        btnClear.disabled = true;
+        btnAdd.disabled = true;
+        fieldEmail.disabled = true;
+        btnCreate.disabled = true;
+        btnTitle.disabled = false;
+        $("#forwardTo").val('');
+        var x = document.getElementById("SendList");
+        x.innerHTML = "";
+        //x.parentNode.remove();
 
     }
 </script>
