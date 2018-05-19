@@ -1,0 +1,41 @@
+﻿@model IEnumerable<eRoutingSlip.Models.RoutingSlip>
+<div class="container mt-3">
+    <h3>Track Progress of Filed Requests</h3>
+    <table class="table">
+        <tr>
+            <th>
+                RS #
+            </th>
+
+            <th>
+                Date Filed
+            </th>
+            <th>
+                Document
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutingSlipID)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateSubmitted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DocumentName)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.RoutingSlipID }) 
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

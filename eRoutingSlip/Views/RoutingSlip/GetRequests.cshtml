@@ -1,39 +1,42 @@
-﻿@model IEnumerable<eRoutingSlip.Models.LinkedListSignature>
+﻿@*@model IEnumerable<eRoutingSlip.Models.LinkedListSignature>*@
+@*@model IEnumerable<eRoutingSlip.Models.RoutingSlipSignatureViewModel>*@
+@model IEnumerable<eRoutingSlip.Models.RoutingSlip>
 
-@{
-    ViewBag.Title = "GetRequests";
-}
+
 <div class="container mt-3">
-    <h2>GetRequests</h2>
+    <h3>Requests Received</h3>
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RoutingSlipID)
+                RS #
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CurrentName)
+                Requesting Employee
+            </th>
+            <th>
+                Date Submitted
             </th>
             <th></th>
         </tr>
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoutingSlipID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CurrentName)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.RoutingSlipID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.RoutingSlipID }) 
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutingSlipID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestingEmployee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateSubmitted)
+            </td>
+            <td>
+                @Html.ActionLink("Review", "Details", new { id = item.RoutingSlipID })
+            </td>
+        </tr>
         }
 
     </table>

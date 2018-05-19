@@ -389,6 +389,8 @@
     <Content Include="Views\RoutingSlip\EmailSearch.cshtml" />
     <Content Include="Views\Employee\SetProfile.cshtml" />
     <Content Include="Views\RoutingSlip\GetRequests.cshtml" />
+    <Content Include="Views\Shared\_RSInbox.cshtml" />
+    <Content Include="Views\RoutingSlip\UserRequests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

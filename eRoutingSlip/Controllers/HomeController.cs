@@ -13,19 +13,25 @@ namespace eRoutingSlip.Controllers
         ERoutingSlipDB _db = new ERoutingSlipDB();
         public ActionResult Index()
         {
-            var model = 
-            from d in _db.Divisions
-            orderby d.DivisionName ascending
-            //orderby d.RoutingSlips.Count() descending
-            //select d;
-            select new DivisionListViewModel
-            {
-                ID = d.ID,
-                DivisionName = d.DivisionName,
-                DivisionHead = d.DivisionHead,
-                RSCount = d.RoutingSlips.Count()
-            };
+            var currUser = System.Web.HttpContext.Current.User.Identity.Name;
+            //var model = _db.LinkedListSignatures.Select(node => node.CurrentName == currUser);
+            var model = _db.LinkedListSignatures.Where(node => node.CurrentName == currUser).ToList();
+
             return View(model);
+
+            //var model = 
+            //from d in _db.Divisions
+            //orderby d.DivisionName ascending
+            ////orderby d.RoutingSlips.Count() descending
+            ////select d;
+            //select new DivisionListViewModel
+            //{
+            //    ID = d.ID,
+            //    DivisionName = d.DivisionName,
+            //    DivisionHead = d.DivisionHead,
+            //    RSCount = d.RoutingSlips.Count()
+            //};
+            //return View(model);
         }
         
         public ActionResult About()

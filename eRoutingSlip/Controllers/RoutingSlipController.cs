@@ -87,11 +87,27 @@ namespace eRoutingSlip.Controllers
 
         public ActionResult GetRequests()
         {
+            
             var currUser = System.Web.HttpContext.Current.User.Identity.Name;
-            //var model = _db.LinkedListSignatures.Select(node => node.CurrentName == currUser);
-            var model = _db.LinkedListSignatures.Where(node => node.CurrentName == currUser).ToList();
 
+
+            var model = _db.LinkedListSignatures.Where(node => node.CurrentName == currUser).ToList();
+            var rs = _db.RoutingSlips.ToList();
+            var result = rs.Where(a => model.Any(x => x.RoutingSlipID == a.RoutingSlipID));
+
+
+            return View(result);
+
+        }
+
+
+        public ActionResult UserRequests()
+        {
+
+            var currUser = System.Web.HttpContext.Current.User.Identity.Name;
+            var model = _db.RoutingSlips.Where(node => node.RequestingEmployee == currUser).ToList();
             return View(model);
+
         }
 
         public ActionResult CreateLinkedList(int id)
