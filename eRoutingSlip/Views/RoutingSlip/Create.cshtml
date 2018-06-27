@@ -57,11 +57,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col ml-3">
                     Route List
 
                     <div class="row h-75 ">
-                        <div class="col-9  h-100 ml-3 mt-3 form-control" id="SendList" style="overflow-y: scroll;">
+
+                        <div class="col-9  h-100 ml-2 mt-3 form-control" id="SendList" style="overflow-y: scroll;">
+                        </div>
+                        <div class="col-sm-1 h-100 mt-3 ml-0">
+
+                            <!-- arrows -->
+                            <div class="row h-50 mt-4 pt-5" ><h1 ><input type="button" value="&#8679;" class="border-0 bg-white" style="border: none;
+    outline:none;" id="down" onclick="highlight();"/></h1></div>
+                            <div class="row h-50"><h1><input type="button" value="&#8681;" class="border-0 bg-white" /></h1></div>
                         </div>
                     </div>
 
@@ -86,51 +94,16 @@
     var btnTitle = document.getElementById("setTitle");
     var fieldTitle = document.getElementById("docTitle");
     var txtError = $('#ErrorText');
-    @*var cache = {};
-    $("#emailInput").autocomplete({
-        minLength: 2,
-        mustMatch: true,
-        focus: function (event, ui) {
-            //ui.item.label contains value
-            return false;
-        },
-        change: function (event, ui) {
-            if (!ui.item) {
-                $("#emailInput").focus();
-                $("#emailInput").val("");
 
 
-            }
-
-        },
-        select: function (event, ui) {
-            var val = ui.item.value;
-            return false;
-        },
-        source: function (request, response) {
-            var term = request.term;
-            if (term in cache) {
-                response(cache[term]);
-                return;
-            }
-            $.ajax({
-                url: '@Url.Action("GetSearchValue","RoutingSlip")',
-                dataType: "json",
-                data: { search: $("#emailInput").val() },
-                success: function (data) {
-                    response($.map(data, function (item) {
-                        return{ label: item.Email, value: item.Email };
-                    }));
-                },
-                error: function (xhr, status, error) {
-                    alert("Error")
-                }
-            });
-        }
-    });*@
+    function highlight() {
+        $("#down").css({ "color": "#ffe5a5" });
+        //$("#down").css({ "color": "black" });
+        setTimeout(function () { $("#down").css({ "color": "black" }); }, 200);
 
 
-    $("#emailInput").autocomplete({
+    }
+    $("#emailInput").autocomplete(        {
         source: function (request, response) {
             $.ajax({
                 url: '@Url.Action("GetSearchValue","RoutingSlip")',
@@ -200,6 +173,7 @@
                     $("#forwardTo").val(f);
                     var newDiv = document.createElement("p");
                     newDiv.setAttribute("class", "mt-2");
+                    newDiv.setAttribute("id", f);
 
                     var emailInput;
 
@@ -216,7 +190,14 @@
 
                     newDiv.appendChild(emailInput); //textnode
                     newDiv.appendChild(removeEntry);
-                    document.getElementById("SendList").appendChild(newDiv);
+                    $('#SendList').append(newDiv);
+                    //newDiv.css('border', 'red'); 
+                    //$('#thisdiv').css('padding', '10px 25px 13px 25px'); 
+                    //var a = \'\'
+                    $('#'+ f).css('padding', '10px 25px 13px 25px'); 
+                    $('#' + f).css('padding', '10px 25px 13px 25px'); 
+
+                    
                     document.getElementById("emailInput").value = '';
                 }
             }
