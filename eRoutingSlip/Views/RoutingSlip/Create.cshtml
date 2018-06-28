@@ -2,6 +2,14 @@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<style>
+    .highlighted {
+        background-color: white;
+        /*padding: 10px 25px 13px 25px;*/
+        color: black;
+    }
+</style>
 @{
     ViewBag.Title = "Create";
 }
@@ -57,19 +65,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col ml-3">
+                <div class="col">
                     Route List
 
                     <div class="row h-75 ">
-
-                        <div class="col-9  h-100 ml-2 mt-3 form-control" id="SendList" style="overflow-y: scroll;">
-                        </div>
-                        <div class="col-sm-1 h-100 mt-3 ml-0">
-
-                            <!-- arrows -->
-                            <div class="row h-50 mt-4 pt-5" ><h1 ><input type="button" value="&#8679;" class="border-0 bg-white" style="border: none;
-    outline:none;" id="down" onclick="highlight();"/></h1></div>
-                            <div class="row h-50"><h1><input type="button" value="&#8681;" class="border-0 bg-white" /></h1></div>
+                        <div class="col-9  h-100 ml-3 mt-3 form-control" id="SendList" style="overflow-y: scroll;">
                         </div>
                     </div>
 
@@ -96,14 +96,7 @@
     var txtError = $('#ErrorText');
 
 
-    function highlight() {
-        $("#down").css({ "color": "#ffe5a5" });
-        //$("#down").css({ "color": "black" });
-        setTimeout(function () { $("#down").css({ "color": "black" }); }, 200);
-
-
-    }
-    $("#emailInput").autocomplete(        {
+    $("#emailInput").autocomplete({
         source: function (request, response) {
             $.ajax({
                 url: '@Url.Action("GetSearchValue","RoutingSlip")',
@@ -170,11 +163,13 @@
                     em = e + ",";
                     f = f + em;
 
+                    // remove .highlighted in p elements
+                    $("#SendList>p").removeClass("highlighted");
+
                     $("#forwardTo").val(f);
                     var newDiv = document.createElement("p");
-                    newDiv.setAttribute("class", "mt-2");
-                    newDiv.setAttribute("id", f);
-
+                    newDiv.setAttribute("class", "highlighted p-2 my-1");
+                    newDiv.setAttribute("id", e);
                     var emailInput;
 
                     emailInput = document.createTextNode($("#emailInput").val());
@@ -190,14 +185,10 @@
 
                     newDiv.appendChild(emailInput); //textnode
                     newDiv.appendChild(removeEntry);
-                    $('#SendList').append(newDiv);
-                    //newDiv.css('border', 'red'); 
-                    //$('#thisdiv').css('padding', '10px 25px 13px 25px'); 
-                    //var a = \'\'
-                    $('#'+ f).css('padding', '10px 25px 13px 25px'); 
-                    $('#' + f).css('padding', '10px 25px 13px 25px'); 
 
-                    
+                    // determine where to append
+
+                    document.getElementById("SendList").appendChild(newDiv);
                     document.getElementById("emailInput").value = '';
                 }
             }
@@ -212,8 +203,13 @@
     function Rem(a) {
 
         var x = document.getElementById(a);
-        x.parentNode.remove();
 
+        // if removed element is highlighted, highlight previous email entry
+        if ((x.parentElement.classList.contains("highlighted")) && $("#SendList").children().length > 1) {
+            x.parentNode.previousSibling.setAttribute("class", "highlighted p-2 my-1");
+        }
+
+        x.parentNode.remove();
         var f = $("#forwardTo").val();
         f = f.replace(a, "");
         $("#forwardTo").val(f);
@@ -222,6 +218,7 @@
         if (x == 0) {
             btnCreate.disabled = true;
         }
+
         fieldEmail.focus();
 
     }
