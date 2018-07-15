@@ -186,8 +186,24 @@
                     $('#ErrorText').html('*Unable to add current user to list');
                 }
                 else {
+                    // add in the list
                     em = e + ",";
-                    f = f + em;
+
+                    var prevDiv;
+
+                    // determine where to append in div
+                    if (($("#SendList").children().length) > 1) {
+                        prevDiv = $('.highlighted').attr("id");
+                        var n = f.indexOf(prevDiv);
+                        var position = n + prevDiv.length + 1;
+                        f = f.substr(0, position) + em + f.substr(position);
+                        prevDiv = document.getElementById(prevDiv);
+                    }
+
+                    else {
+                        f = f + em;
+                    }
+                    // end 
 
                     // remove .highlighted in p elements
                     $("#SendList>p").removeClass("highlighted");
@@ -214,9 +230,15 @@
                     newDiv.appendChild(emailInput); //textnode
                     newDiv.appendChild(removeEntry);
 
-                    // determine where to append
+                    //append to div
+                    if (($("#SendList").children().length) > 1) {
+                        prevDiv.parentNode.insertBefore(newDiv, prevDiv.nextSibling);
+                    }
 
-                    document.getElementById("SendList").appendChild(newDiv);
+                    else {
+                        document.getElementById("SendList").appendChild(newDiv);
+                    }
+
                     document.getElementById("emailInput").value = '';
                 }
             }
