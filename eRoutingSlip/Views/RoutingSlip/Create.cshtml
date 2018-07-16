@@ -9,6 +9,10 @@
         /*padding: 10px 25px 13px 25px;*/
         color: black;
     }
+    input[type="button"] {
+        border: none;
+        outline: none;
+    }
 </style>
 @{
     ViewBag.Title = "Create";
@@ -79,8 +83,8 @@
 
                         <!-- arrows -->
                         <div class="col-sm-1 h-100 mt-3">
-                            <div class="row h-50 mt-4 pt-5"><h1><input type="button" value="&#8679;" class="border-0 bg-white" onclick="selectUp()"/></h1></div>
-                            <div class="row h-50"><h1><input type="button" value="&#8681;" class="border-0 bg-white" onclick="selectDown()" /></h1></div>
+                            <div class="row h-50 mt-4 pt-5"><h1><input id="btnUp" type="button" value="&#8679;" class="border-0 bg-white" onclick="selectUp()"/></h1></div>
+                            <div class="row h-50"><h1><input id="btnDown" type="button" value="&#8681;" class="border-0 bg-white" onclick="selectDown()" /></h1></div>
                         </div>
                     </div>
 
@@ -128,8 +132,14 @@
     $("#emailInput").change(function () {
         $('#ErrorText').html('&nbsp;');
     });
+    function highlight(a) {
+        $(a).css('color', '#f4f7fc');
+        setTimeout(function () { $(a).css('color', 'black'); }, 300);
+
+    }
 
     function selectUp() {
+        highlight(btnUp);
         var seldiv = $('.highlighted').attr("id");
         seldiv = document.getElementById(seldiv);
         seldiv.classList.remove("highlighted");
@@ -138,6 +148,7 @@
     }
 
     function selectDown() {
+        highlight(btnDown);
         var seldiv = $('.highlighted').attr("id");
         seldiv = document.getElementById(seldiv);
         seldiv.classList.remove("highlighted");
@@ -256,7 +267,9 @@
 
         // if removed element is highlighted, highlight previous email entry
         if ((x.parentElement.classList.contains("highlighted")) && $("#SendList").children().length > 1) {
-            x.parentNode.previousSibling.setAttribute("class", "highlighted p-2 my-1");
+                x.parentNode.previousSibling.setAttribute("class", "highlighted p-2 my-1");
+
+
         }
 
         x.parentNode.remove();
