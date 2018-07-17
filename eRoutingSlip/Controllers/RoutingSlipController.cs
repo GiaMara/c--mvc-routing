@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
@@ -248,9 +249,54 @@ namespace eRoutingSlip.Controllers
                 _db.SaveChanges();
                 //return View(queryModel); //commented out 5.5
                 //return RedirectToAction("Index");
-                return RedirectToAction("Details", "RoutingSlip", new { id = modelA.RoutingSlipID });
+                //return RedirectToAction("SetPrevNext", model.RoutingSlipID); //model 
+                return RedirectToAction("BeginEmailProc", new { id = modelA.RoutingSlipID }); //model 
+
+                //return RedirectToAction("Details", "RoutingSlip", new { id = modelA.RoutingSlipID }); //THIS 7.16
             }
             return View(modelA);
+
+        }
+
+        public ActionResult BeginEmailProc(int id)
+        {
+            var obj = _db.RoutingSlips.Find(id);
+            var lls = _db.LinkedListSignatures;
+            //var queryModel = from l in lls
+            //                 where l.RoutingSlipID == obj.RoutingSlipID
+            //                 select l;
+            var item = lls.First(i => i.RoutingSlipID == obj.RoutingSlipID);
+            var body = "You have received a routing slip from " + obj.RequestingEmployee + ". Please click on the link below to view it. <br>" + obj.DocumentName;
+            try
+            {
+                    //Configuring webMail class to send emails
+                    //gmail smtp server
+                    WebMail.SmtpServer = "smtp.gmail.com";
+                    //gmail port to send emails
+                    WebMail.SmtpPort = 587;
+                    WebMail.SmtpUseDefaultCredentials = true;
+                    //sending emails with secure protocol
+                    WebMail.EnableSsl = true;
+                    //EmailId used to send emails from application
+                    WebMail.UserName = "efilemailer@gmail.com";
+                    WebMail.Password = "efile123";
+
+                    //Sender email address.
+                    WebMail.From = "efilemailer@gmail.com";
+
+                    //Send email
+                    WebMail.Send(to: item.CurrentName, subject: "E-File Request", body: body, isBodyHtml: true);
+                }
+                catch (Exception)
+                {
+                return View(obj);
+
+            }
+            if (ModelState.IsValid)
+                {
+                    return RedirectToAction("Details", "RoutingSlip", new { id = obj.RoutingSlipID });
+                }
+                return View(obj);
 
         }
 
