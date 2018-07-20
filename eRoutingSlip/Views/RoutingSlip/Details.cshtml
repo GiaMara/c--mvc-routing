@@ -8,30 +8,35 @@
 
     <div>
         <hr />
-        <dl class="dl-horizontal">
-            <dt>Initiator</dt>
 
-            <dd>@Html.DisplayFor(model => model.RequestingEmployee)</dd>
 
-            <dt>Date Requested</dt>
+        <div class="dl-horizontal">
+            <h5 class="font-weight-bold">Initiator</h5>
 
-            <dd>@Html.DisplayFor(model => model.DateSubmitted)</dd>
+            <p class="lead ml-3">@Html.DisplayFor(model => model.RequestingEmployee)</p>
+
+            <h5>Date Requested</h5>
+
+            <p class="lead ml-3">@Html.DisplayFor(model => model.DateSubmitted)</p>
 
             <!-- Open document -->
-            <dt class="btnRef btn btn-outline-secondary">@Html.ActionLink("Open the Document", "OpenDocument", "Details", new { @id = Model.RoutingSlipID}, null)</dt>
+            <p class="btnRef btn btn-outline-secondary">@Html.ActionLink("Open the Document", "OpenDocument", "Details", new { @id = Model.RoutingSlipID }, null)</p>
 
-            <dt>Route List</dt>
-
-            <dd>@Html.DisplayFor(model => model.ForwardTo)</dd>
-
-
-        </dl>
+            <h5>Route List</h5>
+            <p class="lead ml-3">@Html.DisplayFor(model => model.ForwardTo)</p>
 
 
+        </div>
     </div>
-    <p>
+    <hr />
+    <p class="btnRef btn btn-outline-success">@Html.ActionLink("Forward", "Forward", "Details", new { @id = Model.RoutingSlipID }, null)</p>
+    <p class="btnRef btn btn-outline-info">@Html.ActionLink("Add", "Add", "Details", new { @id = Model.RoutingSlipID }, null)</p>
+    <p class="btnRef btn btn-outline-danger">@Html.ActionLink("Reject", "Reject", "Details", new { @id = Model.RoutingSlipID }, null)</p>
+
+    @*<p>
+
 
         @Html.ActionLink("Edit", "Edit", new { id = Model.RoutingSlipID }) |
         @Html.ActionLink("Back to List", "Index")
-    </p>
+    </p>*@
 </div>

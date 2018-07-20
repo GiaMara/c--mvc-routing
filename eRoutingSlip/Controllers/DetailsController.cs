@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eRoutingSlip.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,13 @@ namespace eRoutingSlip.Controllers
 {
     public class DetailsController : Controller
     {
+        ERoutingSlipDB _db = new ERoutingSlipDB();
+
         public ActionResult OpenDocument(int id)
         {
-            return Redirect("http://www.mysite.com");
+            var model = _db.RoutingSlips.Find(id);
+            var link = model.DocumentName;
+            return Redirect(link);
         }
 
         //// GET: Details
