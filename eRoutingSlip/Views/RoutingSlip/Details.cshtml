@@ -9,11 +9,7 @@
     <div>
         <hr />
         <dl class="dl-horizontal">
-            <dt>Document</dt>
-
-            <dd>@Html.DisplayFor(model => model.DocumentName)</dd>
-
-            <dt>Requesting Employee</dt>
+            <dt>Initiator</dt>
 
             <dd>@Html.DisplayFor(model => model.RequestingEmployee)</dd>
 
@@ -21,12 +17,17 @@
 
             <dd>@Html.DisplayFor(model => model.DateSubmitted)</dd>
 
+            <!-- Open document -->
+            <dt class="btnRef btn btn-outline-secondary">@Html.ActionLink("Open the Document", "OpenDocument", "Details", new { @id = Model.RoutingSlipID}, null)</dt>
+
             <dt>Route List</dt>
 
             <dd>@Html.DisplayFor(model => model.ForwardTo)</dd>
 
 
         </dl>
+
+
     </div>
     <p>
 

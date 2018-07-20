@@ -266,7 +266,7 @@ namespace eRoutingSlip.Controllers
             //                 where l.RoutingSlipID == obj.RoutingSlipID
             //                 select l;
             var item = lls.First(i => i.RoutingSlipID == obj.RoutingSlipID);
-            var body = "You have received a routing slip from " + obj.RequestingEmployee + ". Please click on the link below to view it. <br>" + obj.DocumentName;
+            var body = "You have received a routing slip from " + obj.RequestingEmployee + ". Please click on the link below to view it. <br><b>" + obj.DocumentName + "<b><br> Please log-in to the E-File website to submit your decision.";
             try
             {
                     //Configuring webMail class to send emails

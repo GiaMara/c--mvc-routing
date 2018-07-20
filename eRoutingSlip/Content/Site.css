@@ -26,3 +26,21 @@ textarea {
 #docTitle {
     width: 400px;
 }
+
+/* Display a href as button*/
+.btnRef {
+    /*font: bold 11px Arial;*/
+    text-decoration: none;
+    /*background-color: #EEEEEE;
+    color: #333333;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    width: 200px;*/
+}
+
+.btnRef a {
+    text-decoration: none;
+}
