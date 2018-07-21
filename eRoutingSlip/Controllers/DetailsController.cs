@@ -18,6 +18,29 @@ namespace eRoutingSlip.Controllers
             return Redirect(link);
         }
 
+        public ActionResult Forward(int id)
+        {
+            // Change current name attribute of routing slip
+            //LinkedListSignatureNode llsn = _db.LinkedListSignatureNodes.SingleOrDefault(linkedlist => linkedlist.RoutingSlipID == id && linkedlist.Data.SignatureName == currname);
+            LinkedListSignature lls = _db.LinkedListSignatures.SingleOrDefault(link => link.RoutingSlipID == id);
+            LinkedListSignatureNode llsn = _db.LinkedListSignatureNodes.SingleOrDefault(node => node.Data.SignatureName == lls.CurrentName && node.RoutingSlipID == id);
+            
+            RoutingSlip rs = _db.RoutingSlips.Find(id);
+            rs.LinkedListSignature.CurrentName = llsn.NextSNode.Data.SignatureName;
+            //rs.LinkedListSignature.CurrentName = llsn.NextSNode.Data.SignatureName;
+            //var newCurrent = llsn.NextSNode.Data.SignatureName;
+            llsn.Data.DateRouted = DateTime.Now;
+            //var model = _db.RoutingSlips.Find(id);
+            //model.LinkedListSignature.CurrentName = newCurrent;
+
+            if (ModelState.IsValid)
+            {
+                _db.SaveChanges();
+                return RedirectToAction("Index", "RoutingSlip");
+            }
+            return View(id);
+        }
+
         //// GET: Details
         //public ActionResult Index()
         //{
